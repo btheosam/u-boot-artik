@@ -83,47 +83,6 @@
 	"    echo Flashing factory image...\n"				\
 	"    unzip ${rescuepart} ${bootpart}\n"				\
 	"    reset\0"							\
-	"do_checkupdate=\n"						\
-	"    if itest *${otapart} -ne 0xffffffff; then\n"		\
-	"        setexpr.l startmagicaddr ${otapart}\n"			\
-	"        setexpr.l startmagic *${startmagicaddr}\n"		\
-	"        if itest ${startmagic} -ne ${otastartmagic}; then\n"	\
-	"            echo Bad START MAGIC image!\n"			\
-	"            run do_eraseota\n"					\
-	"            reset\n"						\
-	"        fi\n"							\
-	"        setexpr.l sizeaddr ${otapart} + 0x4\n"			\
-	"        setexpr.l size *${sizeaddr}\n"				\
-	"        setexpr.l sizemax ${otasize} - 0xC\n"			\
-	"        if itest ${size} -gt ${sizemax}; then\n"		\
-	"            echo update image is too big!\n"			\
-	"            run do_eraseota\n"					\
-	"            reset\n"						\
-	"        fi\n"							\
-	"        setexpr.l otagz ${otapart} + 0xC\n"			\
-	"        setexpr.l endmagicaddr ${otagz} + ${size}\n"		\
-	"        setexpr.l endmagic *${endmagicaddr}\n"			\
-	"        if itest ${endmagic} -ne ${otaendmagic}; then\n"	\
-	"            echo Bad END MAGIC image!\n"			\
-	"            run do_eraseota\n"					\
-	"            reset\n"						\
-	"        fi\n"							\
-	"        setexpr.l crcaddr ${otapart} + 0x8\n"			\
-	"        setexpr.l crc *${crcaddr}\n"				\
-	"        crc32 ${otagz} ${size} 0x02023800\n"			\
-	"        if itest.l *0x02023800 -eq ${crc}; then\n"		\
-	"            echo Found an update image downloaded.\n"		\
-	"            run do_eraseboot\n"				\
-	"            echo Updating boot partition...\n"			\
-	"            unzip ${otagz} ${bootpart}\n"			\
-	"            run do_eraseota\n"					\
-	"            echo Done\n"					\
-	"        else\n"						\
-	"            echo Bad CRC image!\n"				\
-	"            run do_eraseota\n"					\
-	"        fi\n"							\
-	"        reset\n"						\
-	"    fi\0"							\
 	"do_eraseboot=\n"						\
 	"    echo Eraseing boot partitions...\n"			\
 	"    erase ${bootpart} +${bootsize}\0"				\
