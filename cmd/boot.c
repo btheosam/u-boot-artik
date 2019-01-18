@@ -42,7 +42,7 @@ static int do_go(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 		return CMD_RET_FAILURE;
 	}
 
-#ifdef CONFIG_TARGET_ARTIK05X
+#if defined CONFIG_TARGET_ARTIK05X && CONFIG_SECURE_BOOT
 	if (is_sboot()) {
 		if (!authenticate_image(addr - 0x20)) {
 			return CMD_RET_FAILURE;

@@ -9,7 +9,6 @@ config ARCH_EXYNOS0
 	select CPU_V7R
 	select CLK_EXYNOS
 	select CLK_EXYNOS0200
-	select SECURE_BOOT
 	help
 	  Samsung Exynos0 SoC family are base on ARM Cortex-R4 CPU.
 
